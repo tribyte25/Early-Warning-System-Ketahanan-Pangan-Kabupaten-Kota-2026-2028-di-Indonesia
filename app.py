@@ -70,33 +70,42 @@ st.markdown("---")
 
 excel_kabkota = df['kabupaten_kota'].tolist()
 
-@st.cache_data
 def create_name_mapping(geojson_features, excel_names):
     mapping = {}
     excel_names_list = list(excel_names)
     
-    manual_overrides = {
-        'Maluku Tenggara Barat': 'Kab. Kepulauan Tanimbar',
-        'Fakfak': 'Kab. Kaimana',
-        'Teluk Bintuni': 'Kab. Kaimana',
-        'Teluk Wondama': 'Kab. Kaimana',
-        'Batang Hari': 'Kab. Batanghari',
-        'Gunung Kidul': 'Kab. Gunungkidul',
-        'Karang Asem': 'Kab. Karangasem',
-        'Kota Banjar Baru': 'Kota Banjarbaru',
-        'Kota Sawah Lunto': 'Kota Sawahlunto',
-        'Mempawah': 'Kab. Pontianak'
-    }
-    
     for feature in geojson_features:
-        geo_name = feature['properties']['name']
-        
-        if geo_name in manual_overrides:
-            mapping[geo_name] = manual_overrides[geo_name]
+        geo_name = feature['properties'].get('name', '')
+        if not geo_name:
             continue
             
         clean_geo = geo_name.lower().replace('kabupaten', '').replace('kota', '').strip()
         
+        if 'fakfak' in clean_geo or 'bintuni' in clean_geo or 'wondama' in clean_geo:
+            mapping[geo_name] = 'Kab. Kaimana'
+            continue
+        if 'tenggara barat' in clean_geo:
+            mapping[geo_name] = 'Kab. Kepulauan Tanimbar'
+            continue
+        if 'mempawah' in clean_geo:
+            mapping[geo_name] = 'Kab. Pontianak'
+            continue
+        if 'batang hari' in clean_geo:
+            mapping[geo_name] = 'Kab. Batanghari'
+            continue
+        if 'gunung kidul' in clean_geo:
+            mapping[geo_name] = 'Kab. Gunungkidul'
+            continue
+        if 'karang asem' in clean_geo:
+            mapping[geo_name] = 'Kab. Karangasem'
+            continue
+        if 'banjar baru' in clean_geo:
+            mapping[geo_name] = 'Kota Banjarbaru'
+            continue
+        if 'sawah lunto' in clean_geo:
+            mapping[geo_name] = 'Kota Sawahlunto'
+            continue
+            
         best_match, score = process.extractOne(clean_geo, excel_names_list)
         if score > 80:
             mapping[geo_name] = best_match
@@ -108,7 +117,7 @@ name_map = create_name_mapping(geojson_data['features'], excel_kabkota)
 df_dict = df.set_index('kabupaten_kota').to_dict('index')
 
 for feature in geojson_data['features']:
-    geo_name = feature['properties']['name']
+    geo_name = feature['properties'].get('name', '')
     matched_name = name_map.get(geo_name)
     if matched_name and matched_name in df_dict:
         row = df_dict[matched_name]
