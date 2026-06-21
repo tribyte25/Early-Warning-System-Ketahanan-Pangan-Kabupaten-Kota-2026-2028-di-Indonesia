@@ -163,7 +163,7 @@ with col_map:
 
 with col_legend:
     legend_html = '''
-    <div style="display: flex; flex-direction: column; height: 500px; padding-top: 0px; padding-bottom: 25px; box-sizing: border-box;">
+    <div style="display: flex; flex-direction: column; height: 480px; padding-top: 0px; padding-bottom: 25px; box-sizing: border-box;">
         <p style='font-size: 14px; font-weight: bold; margin-bottom: 10px; margin-top: 0;'>Nilai Prediksi</p>
         <div style="display: flex; flex-grow: 1; align-items: stretch;">
             <div style="width: 25px; background: linear-gradient(to bottom, #006837, #1a9641, #a6d96a, #ffffbf, #fdae61, #d7191c); border-radius: 5px;"></div>
