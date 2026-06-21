@@ -26,7 +26,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.title("🌾SIGAP : EWS Ketahanan Pangan Tahun 2026-2028")
+st.title("🌾 EWS Kerawanan Pangan: Peta Poligon Interaktif")
 st.markdown("Arahkan kursor ke area kabupaten/kota untuk melihat tingkat kerawanan pangannya.")
 
 @st.cache_data
@@ -76,7 +76,16 @@ def create_name_mapping(geojson_features, excel_names):
     excel_names_list = list(excel_names)
     
     manual_overrides = {
-        'Maluku Tenggara Barat': 'Kab. Kepulauan Tanimbar'
+        'Maluku Tenggara Barat': 'Kab. Kepulauan Tanimbar',
+        'Fakfak': 'Kab. Kaimana',
+        'Teluk Bintuni': 'Kab. Kaimana',
+        'Teluk Wondama': 'Kab. Kaimana',
+        'Batang Hari': 'Kab. Batanghari',
+        'Gunung Kidul': 'Kab. Gunungkidul',
+        'Karang Asem': 'Kab. Karangasem',
+        'Kota Banjar Baru': 'Kota Banjarbaru',
+        'Kota Sawah Lunto': 'Kota Sawahlunto',
+        'Mempawah': 'Kab. Pontianak'
     }
     
     for feature in geojson_features:
@@ -138,7 +147,7 @@ m = folium.Map(location=[-2.5, 118.0], zoom_start=5, tiles="OpenStreetMap")
 folium.GeoJson(
     geojson_data,
     style_function=lambda feature: {
-        'fillColor': colors_dict.get(feature['properties'].get('Prediksi'), 'transparent'), # Langsung berwarna dari awal
+        'fillColor': colors_dict.get(feature['properties'].get('Prediksi'), 'transparent'),
         'color': 'gray',
         'weight': 0.5,
         'fillOpacity': 0.6 if feature['properties'].get('Prediksi') else 0.0
@@ -147,7 +156,7 @@ folium.GeoJson(
         'fillColor': colors_dict.get(feature['properties'].get('Prediksi'), 'gray'),
         'color': 'black',
         'weight': 2,
-        'fillOpacity': 0.9 # Warna menjadi lebih pekat saat disorot kursor
+        'fillOpacity': 0.9
     },
     tooltip=folium.GeoJsonTooltip(
         fields=['Excel_Name', 'Zona', 'Prediksi', 'Padi', 'Hujan', 'Pendapatan', 'Miskin', 'AirBersih'],
@@ -163,7 +172,7 @@ with col_map:
 
 with col_legend:
     legend_html = '''
-    <div style="display: flex; flex-direction: column; height: 420px; padding-top: 0px; padding-bottom: 25px; box-sizing: border-box;">
+    <div style="display: flex; flex-direction: column; height: 480px; padding-top: 0px; padding-bottom: 0px; box-sizing: border-box;">
         <p style='font-size: 14px; font-weight: bold; margin-bottom: 10px; margin-top: 0;'>Nilai Prediksi</p>
         <div style="display: flex; flex-grow: 1; align-items: stretch;">
             <div style="width: 25px; background: linear-gradient(to bottom, #006837, #1a9641, #a6d96a, #ffffbf, #fdae61, #d7191c); border-radius: 5px;"></div>
