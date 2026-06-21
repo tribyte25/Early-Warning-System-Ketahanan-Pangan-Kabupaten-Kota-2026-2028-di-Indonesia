@@ -1,8 +1,9 @@
 streamlit
 pandas
-plotly
 numpy
 folium
 streamlit-folium
 thefuzz
 python-Levenshtein
+branca
+openpyxl
