@@ -75,7 +75,6 @@ def create_name_mapping(geojson_features, excel_names):
     mapping = {}
     excel_names_list = list(excel_names)
     
-    # Kamus manual untuk nama-nama yang berubah drastis atau sering salah deteksi
     manual_overrides = {
         'Maluku Tenggara Barat': 'Kab. Kepulauan Tanimbar'
     }
@@ -125,7 +124,6 @@ for feature in geojson_data['features']:
 
 st.subheader("🗺️ Peta Wilayah Interaktif")
 
-# Warna berdasarkan Prediksi (1 = Merah, 6 = Hijau)
 colors_dict = {
     1: '#d7191c',
     2: '#fdae61',
@@ -158,15 +156,14 @@ folium.GeoJson(
     )
 ).add_to(m)
 
-# Membagi layar jadi 2 kolom (Kiri untuk Peta 85%, Kanan untuk Legenda 15%)
 col_map, col_legend = st.columns([8.5, 1.5])
 
 with col_map:
-    st.components.v1.html(m._repr_html_(), width=1000, height=600)
+    st.components.v1.html(m._repr_html_(), height=500)
 
 with col_legend:
     legend_html = '''
-    <div style="display: flex; flex-direction: column; height: 600px; padding-top: 0px; padding-bottom: 25px; box-sizing: border-box;">
+    <div style="display: flex; flex-direction: column; height: 500px; padding-top: 0px; padding-bottom: 25px; box-sizing: border-box;">
         <p style='font-size: 14px; font-weight: bold; margin-bottom: 10px; margin-top: 0;'>Nilai Prediksi</p>
         <div style="display: flex; flex-grow: 1; align-items: stretch;">
             <div style="width: 25px; background: linear-gradient(to bottom, #006837, #1a9641, #a6d96a, #ffffbf, #fdae61, #d7191c); border-radius: 5px;"></div>
@@ -186,12 +183,9 @@ with col_legend:
 st.markdown("---")
 st.subheader("📋 Detail Data Wilayah")
 
-# Memilih kolom yang ingin ditampilkan di tabel
 display_cols = ['provinsi', 'kabupaten_kota', 'Nilai_Prediksi', 'EWS_zona', 'produksi_padi', 'curah_hujan', 'pendapatan', 'tingkat_kemiskinan', 'tanpa_akses_air_bersih']
-# Menggunakan variabel 'df' yang berisi data yang terpilih pada tahun tersebut
 df_display = df[display_cols].copy()
 
-# Mengubah nama kolom agar lebih rapi saat ditampilkan
 df_display.columns = [
     'Provinsi', 
     'Kabupaten/Kota', 
@@ -204,5 +198,4 @@ df_display.columns = [
     'Tanpa Air Bersih'
 ]
 
-# Menampilkan tabel interaktif (bisa di-sort dan di-scroll)
 st.dataframe(df_display, use_container_width=True, hide_index=True)
