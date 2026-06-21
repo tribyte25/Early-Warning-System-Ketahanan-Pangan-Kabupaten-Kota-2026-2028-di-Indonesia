@@ -26,7 +26,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.title("🌾 EWS Kerawanan Pangan: Peta Poligon Interaktif")
+st.title("🌾SIGAP : EWS Ketahanan Pangan Tahun 2026-2028")
 st.markdown("Arahkan kursor ke area kabupaten/kota untuk melihat tingkat kerawanan pangannya.")
 
 @st.cache_data
