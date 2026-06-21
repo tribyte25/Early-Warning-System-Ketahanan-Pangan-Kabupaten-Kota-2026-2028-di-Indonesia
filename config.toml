@@ -1,15 +1,6 @@
 [theme]
-# warna kksen utama (tombol, tulisan yg disorot, dll) - hijau
 primaryColor = "#2e7d32"
-
-# warna latar belakang utama (krem)
 backgroundColor = "#f7f9f9"
-
-# warna latar menu samping (sidebar) dan kartu angka - putih bersih
 secondaryBackgroundColor = "#ffffff"
-
-# warna tulisan (teks) - abu-abu gelap/biru dongker 
 textColor = "#2c3e50"
-
-# jenis huruf
 font = "sans serif"
